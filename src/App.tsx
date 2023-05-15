@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ChatPage from "./scenes/chatPage";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./theme";
+import { useSelector } from "react-redux";
+import { Routes, Route, BrowserRouter, HashRouter } from "react-router-dom";
+import LoginPage from "./scenes/loginPage";
+import { RootState } from "./store";
 
 function App() {
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <HashRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={isLogged ? <ChatPage /> : <LoginPage />} />
+          </Routes>
+        </ThemeProvider>
+      </HashRouter>
     </div>
   );
 }

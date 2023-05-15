@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# whatsapp client in React.JS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is test WhatsApp client, developed to send and receive text messages using service [green-api.com](https://green-api.com/en).
 
-## Available Scripts
+## Installing
 
-In the project directory, you can run:
+1. Сlone repo
 
-### `npm start`
+```
+git clone
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Install dependencies
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+npm install
+```
 
-### `npm test`
+3. Run locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+npm run start
+```
 
-### `npm run build`
+4. Enjoy!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Authentification
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Sending WhatsApp message like any other call to the API requires account registered on [green-api.com](https://green-api.com/en) and authentication completed on mobile WhatsApp app. To register account you have to proceed to the [control panel](https://console.green-api.com/). After registering you wll get own unique pair of `ID_INSTANCE` and `API_TOKEN_INSTANCE` keys.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+WhatsApp mobile app authentication may be achived by using [control panel](https://console.green-api.com/). You need to scan QR-code generated within the control panel. Or you can request QR-code in App. After scanning you need to Login again using same `ID_INSTANCE` and `API_TOKEN_INSTANCE` keys.
