@@ -7,7 +7,7 @@ This is test WhatsApp client, developed to send and receive text messages using 
 1. Сlone repo
 
 ```
-git clone
+git clone https://github.com/KhanaevaM/whatsApp
 ```
 
 2. Install dependencies
