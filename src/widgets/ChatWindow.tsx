@@ -3,9 +3,8 @@ import ChatWindowTop from "./ChatWindowTop";
 import ChatWindowContent from "./ChatWindowContent";
 import InputMessage from "./InputMessage";
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { setNotification } from "../state/chats";
 
 type Props = { chatHeight: number };
 
@@ -17,7 +16,6 @@ const ChatWindow = ({ chatHeight }: Props) => {
   const selectedChatId = useSelector(
     (state: RootState) => state.chats.selectedChat
   );
-  const dispatch = useDispatch();
 
   const ref = useRef<any>(null);
 
@@ -29,9 +27,8 @@ const ChatWindow = ({ chatHeight }: Props) => {
   }, [heightUpdated]);
 
   useEffect(() => {
-    dispatch(setNotification({ wid: selectedChatId, hasNewMessage: false }));
     setAvatar();
-  }, []);
+  }, [selectedChatId]);
 
   const updateHeight = () => {
     setHeightUpdated(true);

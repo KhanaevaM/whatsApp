@@ -21,18 +21,15 @@ const ChatsSearch = (props: Props) => {
   const dispatch = useDispatch();
 
   function formatPhoneNumber(phoneNumberString: string) {
-    var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-
-    return cleaned;
+    return ("" + phoneNumberString).replace(/\D/g, "");
   }
 
   const startChat = async (phone: string) => {
     const isValid =
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone);
+    const phoneFormatted = formatPhoneNumber(phone);
 
-    if (isValid) {
-      const phoneFormatted = formatPhoneNumber(phone);
-
+    if (isValid && phoneFormatted.length === 11) {
       var chatExists = false;
       chats.forEach(function (item) {
         if (item.wid === `${phoneFormatted}@c.us`) {

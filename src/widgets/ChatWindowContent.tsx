@@ -25,7 +25,6 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
     (state: RootState) => state.chats.selectedChat
   );
   const chats = useSelector((state: RootState) => state.chats.chats);
-
   const scrollRef = useRef<any>(null);
 
   const idInstance = useSelector((state: RootState) => state.user.idInstance);
@@ -58,7 +57,7 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
   };
 
   const getMessages = async () => {
-    const raw = `{"chatId": "${selectedChat}","count": 10}`;
+    const raw = `{"chatId": "${selectedChat}","count": 20}`;
 
     const response: any = await fetch(
       `https://api.green-api.com/waInstance${idInstance}/GetChatHistory/${apiTokenInstance}`,
@@ -177,6 +176,14 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
             })
           );
 
+          dispatch(
+            setLastMessage({
+              wid: senderData["chatId"],
+              message: text,
+              date: getTimeFromTimestamp(receiptBody["timestamp"]),
+            })
+          );
+
           await deleteNotification(receiptId);
         }
       } else if (
@@ -217,6 +224,25 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
               time: getTimeFromTimestamp(receiptBody["timestamp"]),
             })
           );
+
+          dispatch(
+            setLastMessage({
+              wid: senderData["chatId"],
+              message: text,
+              date: getTimeFromTimestamp(receiptBody["timestamp"]),
+            })
+          );
+
+          if (senderData["chatId"] !== selectedChat) {
+            //  show notification about new message
+
+            dispatch(
+              setNotification({
+                wid: senderData["chatId"],
+                hasNewMessage: true,
+              })
+            );
+          }
         }
 
         await deleteNotification(receiptId);
@@ -227,14 +253,14 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
   };
 
   useEffect(() => {
-    getMessages();
-  }, []);
-
-  useEffect(() => {
     const foundChat = chats.find((element) => element.wid === selectedChat);
     if (foundChat && foundChat.messages) {
       setCurrentMessages(foundChat.messages);
+    } else {
+      getMessages();
     }
+
+    dispatch(setNotification({ wid: selectedChat, hasNewMessage: false }));
   }, [selectedChat, chats]);
 
   useEffect(() => {
@@ -248,12 +274,12 @@ const ChatWindowContent = ({ chatHeight }: Props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (scrollRef.current) {
-        scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+        scrollRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [selectedChat, currentMessages]);
 
   const setLastRef = (index: number) => {
     if (index === currentMessages.length - 1) {
